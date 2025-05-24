@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; // ✅ Import this
+import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../../app/services/user.service';
 
 @Component({
@@ -9,17 +9,31 @@ import { UserService } from '../../app/services/user.service';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [CommonModule, FormsModule, HttpClientModule], // ✅ Include here
-  providers: [UserService] // ✅ Optional: add if not globally provided
+  imports: [CommonModule, FormsModule, HttpClientModule],
+  providers: [UserService]
 })
 export class LoginComponent {
+  email: string = '';
+  password: string = '';
+
   constructor(private userService: UserService) {}
 
   login() {
-    this.userService.login('test@example.com', 'password123')
+    if (!this.email || !this.password) {
+      alert('Please enter both email and password');
+      return;
+    }
+
+    this.userService.login(this.email, this.password)
       .subscribe({
-        next: res => console.log('Login success:', res),
-        error: err => console.error('Login failed:', err)
+        next: res => {
+          console.log('Login success:', res);
+          alert('Login Successfully');
+        },
+        error: err => {
+          console.error('Login failed:', err);
+          alert('Login failed');
+        }
       });
   }
 }
