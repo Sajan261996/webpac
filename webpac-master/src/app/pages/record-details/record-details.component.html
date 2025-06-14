@@ -1,0 +1,43 @@
+<div class="container p-4">
+  <h2 class="text-2xl mb-4">{{ isEditMode ? 'Edit' : 'New' }} Record</h2>
+
+  <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
+    <!-- Title Field -->
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
+
+    <!-- Customer ID Field -->
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Customer ID</mat-label>
+      <input matInput formControlName="customerId" />
+    </mat-form-field>
+
+    <!-- Interest Category Field -->
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Interest Category</mat-label>
+      <mat-select formControlName="interestCategories" multiple (selectionChange)="onCategoryChange()">
+        <mat-option *ngFor="let cat of categories" [value]="cat.name">
+          {{ cat.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Interest Sub Category Field -->
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Interest Sub Category</mat-label>
+      <mat-select formControlName="interestSubCategories" multiple>
+        <mat-option *ngFor="let sub of subCategories" [value]="sub">
+          {{ sub }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Action Buttons -->
+    <div class="flex gap-4 mt-4">
+      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button color="warn" type="button" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>
